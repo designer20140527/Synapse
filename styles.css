@@ -1,0 +1,1161 @@
+:root {
+    --primary-bg: #0a0b14;
+    --secondary-bg: #1a1b23;
+    --accent-color: #6366f1;
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0a0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: var(--primary-bg);
+    color: var(--text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    min-height: 100vh;
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.1) 0%, transparent 20%),
+        radial-gradient(circle at 90% 80%, rgba(99, 102, 241, 0.1) 0%, transparent 20%);
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* 导航栏样式 */
+nav {
+    padding: 1.5rem 2rem;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+/* 初始状态：完全透明 */
+nav:not(.scrolled) {
+    background: transparent;
+    backdrop-filter: none;
+}
+
+/* 滚动状态 */
+nav.scrolled {
+    background: rgba(10, 11, 20, 0.8);
+    backdrop-filter: blur(10px);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo img {
+    height: 32px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.nav-links a {
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 400;
+}
+
+.launch-btn {
+    background: var(--text-primary);
+    color: var(--primary-bg) !important;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.launch-btn:hover {
+    background: var(--accent-color);
+    color: var(--text-primary) !important;
+}
+
+/* 主要内容区域样式 */
+.hero-section {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 0;
+    text-align: center;
+    position: relative;
+    overflow: visible;
+}
+
+/* Coin 背景层 */
+.hero-section::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('./assets/images/coin.png');
+    background-position: left center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.25;
+    z-index: 0;
+    transition: all 0.3s ease;
+    animation: floatingCoin 6s ease-in-out infinite;
+}
+
+/* Hand 背景层 */
+.hero-section::after {
+    content: '';
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70%;
+    height: 70%;
+    background-image: url('./assets/images/hand.png');
+    background-position: bottom center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    opacity: 0.25;
+    z-index: 0;
+    transition: all 0.3s ease;
+}
+
+.hero-section > * {
+    position: relative;
+    z-index: 1;
+}
+
+h1 {
+    font-size: 4.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+    background: none;
+    -webkit-text-fill-color: initial;
+    font-weight: 600;
+    opacity: 0;
+    animation: fadeIn 1s ease forwards;
+}
+
+h2 {
+    font-size: 1.25rem;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    font-weight: 300;
+    opacity: 0;
+    animation: fadeIn 1s ease 0.3s forwards;
+}
+
+/* 添加淡入动画 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 修改浮动动画关键帧名称，避免冲突 */
+@keyframes floatingCoin {
+    0% {
+        transform: translateY(0px) scale(var(--overlay-scale, 1));
+    }
+    50% {
+        transform: translateY(-20px) scale(var(--overlay-scale, 1));
+    }
+    100% {
+        transform: translateY(0px) scale(var(--overlay-scale, 1));
+    }
+}
+
+.feature-capsule {
+    background: var(--secondary-bg);
+    border-radius: 300px;
+    padding: 1rem 2rem;
+    margin: 2rem auto;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    width: 100%;
+    max-width: 900px;
+}
+
+.capsule-content {
+    display: grid;
+    grid-template-columns: 24px minmax(0, 1fr) 24px;
+    gap: 2rem;
+    padding: 0.5rem;
+    text-align: left;
+    align-items: center;
+}
+
+.capsule-icon {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    opacity: 0.7;
+}
+
+.capsule-content p {
+    color: var(--text-secondary);
+    line-height: 1.5;
+    font-size: 0.95rem;
+    font-weight: 400;
+    margin: 0;
+    position: relative;
+    width: 100%;
+    visibility: hidden;
+}
+
+/* 第一行 */
+.capsule-content p::before {
+    content: "Synapse combines AI-driven DeFi investment automation with a social trading network,";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 1.5em;
+    visibility: visible;
+    white-space: nowrap;
+    overflow: hidden;
+    color: var(--text-secondary);
+    animation: typing 2s steps(85) forwards;
+}
+
+/* 第二行 */
+.capsule-content p::after {
+    content: "allowing users to optimize portfolios, automate yield strategies, and follow top investors—";
+    position: absolute;
+    top: 1.5em;
+    left: 0;
+    width: 0;
+    height: 1.5em;
+    visibility: visible;
+    white-space: nowrap;
+    overflow: hidden;
+    color: var(--text-secondary);
+    animation: typing 2s steps(85) 2s forwards;
+}
+
+/* 第三行 */
+.capsule-content p span::before {
+    content: "maximizing returns with minimal effort.";
+    position: absolute;
+    top: 3em;
+    left: 0;
+    width: 0;
+    height: 1.5em;
+    visibility: visible;
+    white-space: nowrap;
+    overflow: hidden;
+    color: var(--text-secondary);
+    animation: typing 2s steps(50) 4s forwards;
+}
+
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+/* 添加宽度限制容器 */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 10;
+}
+
+/* Why Synapse 部分样式 */
+.why-synapse {
+    padding: 6rem 0;
+    position: relative;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 4rem;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.feature-card {
+    background: var(--secondary-bg);
+    border-radius: 24px;
+    padding: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(99, 102, 241, 0.3);
+}
+
+.feature-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(99, 102, 241, 0.1);
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    color: var(--accent-color);
+    position: relative;
+}
+
+/* 添加脉冲阴影动画 */
+.feature-icon::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    background: rgba(99, 102, 241, 0.4);
+    animation: iconPulse 2s infinite;
+}
+
+/* 添加新的动画关键帧 */
+@keyframes iconPulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.4;
+    }
+    70% {
+        transform: scale(1.3);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1.3);
+        opacity: 0;
+    }
+}
+
+.feature-card h3 {
+    font-size: 1.25rem;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.feature-card p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    .nav-container {
+        padding: 0 1rem;
+    }
+
+    .nav-links {
+        gap: 1rem;
+    }
+
+    h1 {
+        font-size: 3rem;
+    }
+
+    .feature-capsule {
+        display: none;
+    }
+
+    .hero-section::before {
+        content: none;
+    }
+
+    h2::after {
+        content: "Synapse combines AI-driven DeFi investment automation with a social trading network, allowing users to optimize portfolios, automate yield strategies, and follow top investors—maximizing returns with minimal effort.";
+        display: block;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        line-height: 1.6;
+        margin-top: 1rem;
+        text-align: center;
+        font-weight: 400;
+    }
+
+    .ai-features {
+        display: none;
+    }
+
+    .ai-engine-mobile {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        padding: 0 1rem;
+    }
+
+    .ai-engine-mobile .feature-card {
+        width: 100%;
+        background: var(--secondary-bg);
+        border-radius: 24px;
+        padding: 2rem;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .ai-engine-mobile .card-image {
+        display: flex;
+        justify-content: center;
+        margin: 1.5rem 0;
+    }
+
+    .ai-engine-mobile .ai-image {
+        width: 180px;
+        height: 180px;
+    }
+
+    .footer-links {
+        padding-left: 0;
+        display: flex;
+        justify-content: flex-start;
+        gap: 3rem;
+        margin-left: 0;
+    }
+}
+
+/* AI Engine 部分样式 */
+.ai-features {
+    display: grid;
+    grid-template-columns: 0.4fr 1fr;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* 所有卡片的基础样式 */
+.ai-features .feature-card {
+    background: var(--secondary-bg);
+    border-radius: 24px;
+    padding: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+}
+
+/* 左侧大卡片 */
+.ai-features .feature-card.large {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    min-height: 400px;
+}
+
+.ai-features .feature-card.large .card-content {
+    margin-bottom: 1rem; /* 为底部图片留出空间 */
+}
+
+.ai-features .feature-card.large .card-image-bottom {
+    margin-top: 0.5rem;
+    display: flex;
+    justify-content: center;
+}
+
+.ai-features .feature-card.large .ai-image {
+    width: 300px; /* 大幅增加宽度 */
+    height: 300px; /* 大幅增加高度 */
+    margin-bottom: 0; /* 移除底部间距 */
+}
+
+/* 确保图片容器有足够空间 */
+.feature-card.large {
+    padding-bottom: 3rem; /* 增加底部内边距 */
+}
+
+/* 右侧两个卡片 */
+.ai-features .feature-card:nth-child(2),
+.ai-features .feature-card:nth-child(3) {
+    grid-column: 2;
+    padding: 2rem;
+    padding-left: 220px; /* 增加左侧空间以容纳更大的图片 */
+    position: relative;
+    min-height: 200px; /* 适当增加高度 */
+    display: flex;
+    align-items: center;
+}
+
+.ai-features .feature-card:nth-child(2) .content,
+.ai-features .feature-card:nth-child(3) .content {
+    flex: 1;
+}
+
+/* 右侧卡片的左侧图片容器 */
+.ai-features .feature-card:nth-child(2) .card-image-left,
+.ai-features .feature-card:nth-child(3) .card-image-left {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 220px; /* 增加宽度 */
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem; /* 减少内边距 */
+}
+
+/* 右侧卡片的图片 */
+.ai-features .feature-card:nth-child(2) .ai-image,
+.ai-features .feature-card:nth-child(3) .ai-image {
+    width: 180px; /* 增大图片尺寸 */
+    height: 180px;
+    margin-bottom: 0;
+}
+
+.ai-features .feature-card:nth-child(2) h3,
+.ai-features .feature-card:nth-child(3) h3 {
+    margin-bottom: 1rem;
+}
+
+.ai-features .feature-card:nth-child(2) p,
+.ai-features .feature-card:nth-child(3) p {
+    margin: 0;
+}
+
+/* 底部卡片容器 */
+.bottom-cards {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+/* 底部卡片样式 */
+.ai-features .bottom-cards .feature-card {
+    background: var(--secondary-bg);
+    border-radius: 24px;
+    padding: 2.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+/* 强制底部卡片的标题和内容左对齐 */
+.ai-features .bottom-cards .feature-card h3 {
+    font-size: 1.25rem;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    font-weight: 500;
+    text-align: left !important;
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+    position: relative !important;
+    left: 0 !important;
+    transform: none !important;
+    width: 100% !important;
+}
+
+/* 确保和内容对齐 */
+.ai-features .bottom-cards .feature-card p {
+    text-align: left !important;
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+}
+
+.ai-features .bottom-cards .feature-card h3 {
+    font-size: 1.25rem;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    font-weight: 500;
+    text-align: left;
+}
+
+.ai-features .bottom-cards .feature-card p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+    text-align: left;
+}
+
+.ai-features .bottom-cards .card-image-bottom-small {
+    display: flex;
+    justify-content: center;
+    margin-top: auto;
+}
+
+.ai-features .bottom-cards .feature-card .card-image-bottom-small img {
+    width: 400px;
+    height: 400px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .ai-features {
+        grid-template-columns: 1fr;
+    }
+    
+    .feature-card.large {
+        grid-column: auto;
+        grid-row: auto;
+    }
+}
+
+/* Social Features 部分样式 */
+.social-features {
+    padding: 6rem 0;
+    position: relative;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+/* 模仿 ref-7 的 subtitle 样式 */
+.subtitle-wrapper {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(99, 102, 241, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    margin-bottom: 1rem;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    background: var(--accent-color);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 6px rgba(99, 102, 241, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
+    }
+}
+
+.section-subtitle {
+    font-size: 0.95rem;
+    color: var(--accent-color);
+    font-weight: 500;
+}
+
+.social-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.social-card {
+    background: var(--secondary-bg);
+    border-radius: 24px;
+    padding: 3rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.feature-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem;
+}
+
+.feature-item {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+}
+
+.feature-item .icon {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    color: var(--accent-color);
+}
+
+.feature-item .content {
+    flex: 1;
+}
+
+.feature-item h3 {
+    font-size: 1.25rem;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.feature-item p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .feature-list {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+
+/* Tokenomics 部分样式 */
+.tokenomics {
+    padding: 6rem 0;
+    position: relative;
+}
+
+.token-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Token Details 部分 */
+.token-basic {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin-bottom: 3rem;
+    background: var(--secondary-bg);
+    border-radius: 24px;
+    padding: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.info-item h4 {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+}
+
+.info-item p {
+    font-size: 1.25rem;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+/* Token Utility 部分 */
+.token-utility {
+    background: var(--secondary-bg);
+    border-radius: 24px;
+    padding: 2.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.token-utility h3 {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    color: var(--text-primary);
+}
+
+.token-utility ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.token-utility li h4 {
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.token-utility li p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+/* Token Allocation 部分 */
+.token-allocation {
+    background: var(--secondary-bg);
+    border-radius: 24px;
+    padding: 2.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.allocation-chart {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 3rem; /* 为底部logo留出空间 */
+}
+
+/* 添加底部logo */
+.token-allocation .card-image {
+    display: flex;
+    justify-content: center;
+    margin-top: auto;
+}
+
+.token-allocation .card-image img {
+    width: 300px;
+    height: 300px;
+}
+
+.allocation-item {
+    --percentage: 0;
+}
+
+.allocation-bar {
+    height: 8px;
+    background: rgba(99, 102, 241, 0.2);
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.allocation-bar::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: calc(var(--percentage) * 1%);
+    background: var(--accent-color);
+    border-radius: 4px;
+}
+
+.allocation-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.allocation-label .label {
+    color: var(--text-primary);
+    font-size: 0.95rem;
+}
+
+.allocation-label .percentage {
+    color: var(--accent-color);
+    font-weight: 500;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .token-info {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+
+/* FAQ 部分样式 */
+.faq {
+    padding: 6rem 0;
+    position: relative;
+}
+
+.accordion {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.accordion-item {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.accordion-header {
+    width: 100%;
+    padding: 1.5rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-align: left;
+}
+
+.accordion-header:hover {
+    color: var(--accent-color);
+}
+
+.accordion-header .icon {
+    color: var(--accent-color);
+    transition: transform 0.3s ease;
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); /* 使用更平滑的缓动函数 */
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+.accordion-content p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    font-size: 0.95rem;
+    padding-bottom: 1.5rem;
+}
+
+.accordion-item.active .accordion-header .icon {
+    transform: rotate(45deg);
+}
+
+.accordion-item.active .accordion-content {
+    max-height: 300px; /* 增加最大高度，避免内容被截断 */
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .faq-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Footer 样式 */
+footer {
+    background: var(--secondary-bg);
+    padding: 4rem 0 2rem;
+    margin-top: 4rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    z-index: 10;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 4rem;
+    margin-bottom: 3rem;
+}
+
+/* Footer Logo 部分 */
+.footer-logo {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.footer-logo img {
+    height: 32px;
+    margin-top: 4px;
+}
+
+.footer-logo span {
+    color: var(--text-primary);
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+.footer-links {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    justify-content: end;
+    padding-left: 25%;
+}
+
+.link-group {
+    text-align: left;
+}
+
+.link-group h4 {
+    color: var(--text-primary);
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.link-group a {
+    display: block;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    transition: color 0.3s ease;
+}
+
+.link-group a:hover {
+    color: var(--accent-color);
+}
+
+.footer-bottom {
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+}
+
+.footer-bottom p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .footer-links {
+        padding-left: 0;
+        display: flex;
+        justify-content: flex-start;
+        gap: 3rem;
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer-links {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* 添加粒子容器样式 */
+#particles-js {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: auto;
+}
+
+/* 确保其他内容在粒子之上 */
+.container, nav, footer {
+    position: relative;
+    z-index: 10;
+}
+
+/* AI Engine 部分的图片样式 */
+.ai-image {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    color: var(--accent-color);
+}
+
+/* 移除其他可能影响对齐的样式 */
+.bottom-cards .feature-card {
+    text-align: left;
+}
+
+/* 添加平滑滚动效果 */
+html {
+    scroll-behavior: smooth; /* 添加平滑滚动 */
+}
+
+/* 为每个锚点部分添加滚动偏移量，避免被固定导航栏遮挡 */
+section[id] {
+    scroll-margin-top: 100px; /* 根据导航栏高度调整 */
+}
+
+/* 在 iPad 端修复底部卡片的宽度问题 */
+@media (max-width: 1024px) {
+    .ai-features .bottom-cards {
+        max-width: 100%; /* 确保不超出容器 */
+        overflow: hidden; /* 防止溢出 */
+    }
+
+    .ai-features .bottom-cards .feature-card {
+        width: 100%; /* 确保卡片不超出容器 */
+        min-height: auto; /* 允许高度自适应 */
+        padding: 2rem; /* 减少内边距 */
+    }
+
+    .ai-features .bottom-cards .card-image-bottom-small img {
+        width: 100%; /* 图片宽度自适应 */
+        max-width: 300px; /* 限制最大宽度 */
+        height: auto; /* 保持比例 */
+    }
+}
+
+/* 手机版 AI Engine 样式 */
+.ai-engine-mobile {
+    display: none; /* 默认隐藏 */
+}
+
+@media (max-width: 768px) {
+    .ai-features {
+        display: none; /* 隐藏原始布局 */
+    }
+
+    .ai-engine-mobile {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        padding: 0 1rem;
+    }
+
+    .ai-engine-mobile .feature-card {
+        width: 100%;
+        background: var(--secondary-bg);
+        border-radius: 24px;
+        padding: 2rem;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .ai-engine-mobile .card-image {
+        display: flex;
+        justify-content: center;
+        margin: 1.5rem 0;
+    }
+
+    .ai-engine-mobile .ai-image {
+        width: 180px;
+        height: 180px;
+    }
+
+    /* 移除 AI Engine 标题下的描述文本 */
+    .ai-engine h2::after {
+        content: none; /* 移除这段文本 */
+    }
+} 
